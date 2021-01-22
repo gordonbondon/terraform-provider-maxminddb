@@ -1,5 +1,7 @@
 # terraform-provider-maxminddb
 
+![Build status](https://github.com/gordonbondon/terraform-provider-maxminddb/workflows/Tests/badge.svg?branch=master)
+
 Terraform provider that helps working with [MaxMind GeoIP2 Databases](https://www.maxmind.com/en/geoip2-databases)
 
 ## Using the Provider
