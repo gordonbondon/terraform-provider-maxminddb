@@ -5,8 +5,9 @@ import (
 	"flag"
 	"log"
 
-	"github.com/gordonbondon/terraform-provider-maxminddb/internal/provider"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/plugin"
+
+	"github.com/gordonbondon/terraform-provider-maxminddb/internal/provider"
 )
 
 // Run "go generate" to format example terraform files and generate the docs for the registry/website
@@ -19,11 +20,9 @@ import (
 // can be customized.
 //go:generate go run github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs
 
-var (
-	// these will be set by the goreleaser configuration
-	// to appropriate values for the compiled binary
-	version string = "dev"
-)
+// these will be set by the goreleaser configuration
+// to appropriate values for the compiled binary
+var version string = "dev"
 
 func main() {
 	var debugMode bool
@@ -38,6 +37,7 @@ func main() {
 		if err != nil {
 			log.Fatal(err.Error())
 		}
+
 		return
 	}
 

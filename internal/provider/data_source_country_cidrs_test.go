@@ -7,14 +7,14 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/resource"
 )
 
-func TestAccDataSourceCountryCIDRs(t *testing.T) {
+func TestAccDataSourceCountryCIDRs_Basic(t *testing.T) {
 	resName := "data.maxminddb_country_cidrs.foo"
 	resource.UnitTest(t, resource.TestCase{
 		PreCheck:          func() { testAccPreCheck(t) },
 		ProviderFactories: providerFactories,
 		Steps: []resource.TestStep{
 			{
-				Config: testAccDataSourceCountryCIDRs(testDB),
+				Config: testAccDataSourceCountryCIDRs_Create(testDB),
 				Check: resource.ComposeTestCheckFunc(
 					resource.TestCheckResourceAttr(
 						resName, "cidrs.#", "26"),
@@ -53,7 +53,7 @@ func TestAccDataSourceCountryCIDRs(t *testing.T) {
 	})
 }
 
-func testAccDataSourceCountryCIDRs(dbPath string) string {
+func testAccDataSourceCountryCIDRs_Create(dbPath string) string {
 	return fmt.Sprintf(`
 provider "maxminddb" {
   db_path = "%s"
@@ -104,7 +104,7 @@ provider "maxminddb" {
 }
 
 data "maxminddb_country_cidrs" "foo" {
-  ip_address_version = "IPv6"
+  ip_address_version = "IPV6"
   country {
     iso_code = "GB"
   }

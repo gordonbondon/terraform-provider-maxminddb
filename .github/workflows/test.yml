@@ -29,15 +29,26 @@ jobs:
         with:
           version: v1.35
 
+      - uses: actions/cache@v1
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Get dependencies
+        run: |
+          go mod download
+
       - name: lint provider
         run: |
           make tools
 
           terrafmt diff --check --quiet --fmtcompat ./internal/provider
 
-          tfproviderlint ./...
+          tfproviderlint -AT004=false ./...
 
-          tfproviderdocs
+          tfproviderdocs check -provider-name=terraform-provider-maxminddb .
 
   # run acceptance tests in a matrix with Terraform core versions
   test:

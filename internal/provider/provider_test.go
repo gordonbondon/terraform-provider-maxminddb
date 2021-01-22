@@ -22,6 +22,8 @@ func TestProvider(t *testing.T) {
 }
 
 func testAccPreCheck(t *testing.T) {
+	t.Helper()
+
 	_, err := os.Stat(testDB)
 	if err != nil {
 		if os.IsNotExist(err) {

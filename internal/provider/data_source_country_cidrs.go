@@ -6,17 +6,21 @@ import (
 	"sort"
 	"strings"
 
+	"github.com/gordonbondon/maxminddb-cidrs/pkg/cidrs"
 	"github.com/hashicorp/go-cty/cty"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/diag"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/validation"
+)
 
-	"github.com/gordonbondon/maxminddb-cidrs/pkg/cidrs"
+const (
+	dataCountryCIDRsDescription = `Retrieving network lists based on [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)
+	country codes and subdivision codes.`
 )
 
 func dataCountryCIDRs() *schema.Resource {
 	return &schema.Resource{
-		Description: "Retrieving network lists based on [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2) country codes and subdivision codes.",
+		Description: dataCountryCIDRsDescription,
 
 		ReadContext: dataCountryCIDRsRead,
 
@@ -102,6 +106,7 @@ func dataCountryCIDRsRead(ctx context.Context, d *schema.ResourceData, meta inte
 	sort.Strings(cidrs)
 
 	d.SetId(fmt.Sprintf("%d", hash(strings.Join(cidrs, ""))))
+
 	if err := d.Set("cidrs", cidrs); err != nil {
 		diags = append(diags, diag.Diagnostic{
 			Severity:      diag.Error,

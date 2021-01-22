@@ -16,6 +16,7 @@ func expandCountry(config []interface{}) []cidrs.Country {
 			for i, s := range v {
 				sub[i] = s.(string)
 			}
+
 			country.Subdivisions = sub
 		}
 
